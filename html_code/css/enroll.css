@@ -1,0 +1,6 @@
+#myEnrollBox .card{
+    transition: 0.2s;
+}
+#myEnrollBox .card:hover{
+    background: #f8f9fa;
+}

@@ -1,0 +1,29 @@
+<div class="modal fade" id="actDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalActTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="actDetailInfo"></div>
+                <hr>
+                <div id="qrBox" class="text-center d-none">
+                    <h6>签到二维码</h6>
+                    <div class="qrcode-box" id="qrCanvas"></div>
+                    <button class="btn btn-sm btn-success" onclick="generateSignQr()">刷新签到码</button>
+                </div>
+                <hr>
+                <h6>活动评论</h6>
+                <div class="mb-3">
+                    <textarea class="form-control" id="commentInput" placeholder="发表评论"></textarea>
+                    <button class="btn btn-sm btn-primary mt-2" onclick="submitComment()">发布评论</button>
+                </div>
+                <div id="commentList"></div>
+                <hr>
+                <div id="reviewBox"></div>
+            </div>
+            <div class="modal-footer" id="modalBtnBox"></div>
+        </div>
+    </div>
+</div>

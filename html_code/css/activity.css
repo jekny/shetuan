@@ -1,0 +1,9 @@
+.activity-card{
+    height: 100%;
+}
+#activityCardBox{
+    row-gap: 20px;
+}
+#actDetailInfo p{
+    margin:6px 0;
+}

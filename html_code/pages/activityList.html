@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-between mb-3">
+    <h3>全部活动</h3>
+    <div>
+        <select id="filterStatus" class="form-select d-inline w-auto" onchange="loadActivityList()">
+            <option value="">全部状态</option>
+            <option value="PUBLISH">进行中</option>
+            <option value="CANCEL">已取消</option>
+        </select>
+    </div>
+</div>
+<div class="row" id="activityCardBox"></div>

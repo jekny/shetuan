@@ -1,0 +1,36 @@
+<h3>发布新活动</h3>
+<div class="mt-4">
+    <div class="mb-3">
+        <label>活动标题</label>
+        <input class="form-control" id="actTitle">
+    </div>
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>活动开始时间</label>
+            <input type="datetime-local" class="form-control" id="actStart">
+        </div>
+        <div class="col-6 mb-3">
+            <label>活动结束时间</label>
+            <input type="datetime-local" class="form-control" id="actEnd">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>活动地点</label>
+            <input class="form-control" id="actLoc">
+        </div>
+        <div class="col-6 mb-3">
+            <label>报名人数上限</label>
+            <input type="number" class="form-control" id="actMax">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label>报名截止时间</label>
+        <input type="datetime-local" class="form-control" id="actEnrollEnd">
+    </div>
+    <div class="mb-3">
+        <label>活动详情</label>
+        <textarea class="form-control" rows="4" id="actContent"></textarea>
+    </div>
+    <button class="btn btn-primary" onclick="publishActivity()">提交发布</button>
+</div>
