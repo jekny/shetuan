@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE
-        mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shetuan.mapper.SysUserMapper">
     <select id="selectByUsername" resultType="SysUser">
         select * from sys_user where username = #{username}
     </select>
+
+    <select id="selectById" resultType="SysUser">
+        select * from sys_user where id = #{id}
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into sys_user(username,password,real_name,role)
         values(#{username},#{password},#{realName},#{role})
     </insert>
 </mapper>
-
