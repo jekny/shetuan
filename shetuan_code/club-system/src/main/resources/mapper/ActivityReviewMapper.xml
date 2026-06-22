@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shetuan.mapper.ActivityReviewMapper">
+    <select id="selectByActivityId" resultType="ActivityReview">
+        select * from activity_review where activity_id=#{activityId}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into activity_review(activity_id,summary,photos,like_num)
+        values(#{activityId},#{summary},#{photos},0)
+    </insert>
+    <update id="updateById">
+        update activity_review set summary=#{summary},photos=#{photos} where activity_id=#{activityId}
+    </update>
+    <update id="addLikeNum">
+        update activity_review set like_num = like_num + 1 where activity_id=#{activityId}
+    </update>
+</mapper>

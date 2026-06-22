@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shetuan.mapper.ActivityCommentMapper">
+    <select id="selectByActivityId" resultType="ActivityComment">
+        select * from activity_comment where activity_id=#{activityId} order by top desc,create_time desc
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into activity_comment(activity_id,user_id,content,img_url,parent_id,top)
+        values(#{activityId},#{userId},#{content},#{imgUrl},#{parentId},#{top})
+    </insert>
+    <update id="updateTopById">
+        update activity_comment set top=#{top} where id=#{id}
+    </update>
+    <delete id="deleteById">
+        delete from activity_comment where id=#{id}
+    </delete>
+</mapper>

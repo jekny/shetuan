@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shetuan.mapper.SysClubMapper">
+    <select id="selectAll" resultType="SysClub">
+        select * from sys_club
+    </select>
+    <select id="selectById" resultType="SysClub">
+        select * from sys_club where id = #{id}
+    </select>
+    <select id="selectByLeaderId" resultType="SysClub">
+        select * from sys_club where leader_id = #{leaderId}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_club(club_name,leader_id,intro)
+        values(#{clubName},#{leaderId},#{intro})
+    </insert>
+    <update id="updateById">
+        update sys_club set club_name=#{clubName},intro=#{intro} where id=#{id}
+    </update>
+</mapper>
