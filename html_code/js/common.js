@@ -3,58 +3,79 @@ let token = localStorage.getItem("token") || "";
 let userRole = localStorage.getItem("role") || "";
 let currentActId = null;
 
-// axios全局携带token
 axios.interceptors.request.use(config => {
     if(token) config.headers.token = token;
     return config;
 })
+axios.interceptors.response.use(
+    res => res,
+    err => {
+        localStorage.clear();
+        token = "";
+        userRole = "";
+        alert("后端服务断开，请重启服务刷新页面");
+        document.getElementById("loginPage").classList.add("active");
+        document.getElementById("mainPage").classList.remove("active");
+        document.getElementById("contentContainer").innerHTML = "";
+        return Promise.reject(err);
+    }
+)
 
 window.onload = async function(){
+    token = localStorage.getItem("token") || "";
+    userRole = localStorage.getItem("role") || "";
+    console.log("页面初始化读取角色：", userRole);
+    // 全局委托监听侧边栏点击，永久生效
+    document.querySelector(".sidebar").addEventListener("click", async function(e){
+        const target = e.target.closest(".nav-menu");
+        if(!target) return;
+        e.preventDefault();
+        const pageId = target.dataset.page;
+        console.log("点击菜单，要加载页面：", pageId);
+        document.querySelectorAll(".nav-menu").forEach(i=>i.classList.remove("active"));
+        target.classList.add("active");
+        await loadPageHtml(pageId);
+        // 页面加载完成后执行对应数据加载
+        switch(pageId){
+            case "activityList": loadActivityList(); break;
+            case "myEnroll": loadMyEnroll(); break;
+            case "clubList": loadClubList(); break;
+            case "statPage": loadStatData(); break;
+            case "publishAct": console.log("进入发布活动页面"); break;
+        }
+    })
+
     if(token){
         showMainPage();
         toggleRoleMenu();
-        // 默认加载活动首页
         await loadPageHtml("activityList");
         loadActivityList();
     }
-    bindSidebarClick();
 }
 
-// 侧边栏点击绑定
-function bindSidebarClick(){
-    document.querySelectorAll(".nav-menu").forEach(item=>{
-        item.onclick = async function(e){
-            e.preventDefault();
-            let pageId = this.dataset.page;
-            document.querySelectorAll(".nav-menu").forEach(i=>i.classList.remove("active"));
-            this.classList.add("active");
-            await loadPageHtml(pageId);
-            // 对应页面加载数据
-            switch(pageId){
-                case "activityList": loadActivityList(); break;
-                case "myEnroll": loadMyEnroll(); break;
-                case "clubList": loadClubList(); break;
-                case "statPage": loadStatData(); break;
-            }
-        }
-    })
-}
-
-// 异步加载pages文件夹html片段到内容区
 async function loadPageHtml(pageName){
-    let res = await fetch(`./pages/${pageName}.html`);
-    let html = await res.text();
-    document.getElementById("contentContainer").innerHTML = html;
+    console.log("开始拉取页面文件：pages/" + pageName + ".html");
+    try {
+        const res = await fetch(`./pages/${pageName}.html`);
+        if (!res.ok) {
+            alert(`页面文件${pageName}.html缺失，请检查pages文件夹`);
+            return;
+        }
+        const html = await res.text();
+        document.getElementById("contentContainer").innerHTML = html;
+        console.log(pageName + "页面加载完成");
+    } catch (err) {
+        console.error("页面拉取失败", err);
+        alert("页面文件加载失败，检查文件是否存在");
+    }
 }
 
-// 异步加载弹窗模板
 async function loadModalHtml(modalName){
-    let res = await fetch(`./modal/${modalName}.html`);
-    let html = await res.text();
+    const res = await fetch(`./modal/${modalName}.html`);
+    const html = await res.text();
     document.getElementById("modalContainer").innerHTML = html;
 }
 
-// 切换登录/注册标签
 function switchTab(type){
     if(type === 'login'){
         document.getElementById("loginForm").style.display = "block";
@@ -69,26 +90,26 @@ function switchTab(type){
     }
 }
 
-// 展示主页面、隐藏登录页
 function showMainPage(){
     document.getElementById("loginPage").classList.remove("active");
     document.getElementById("mainPage").classList.add("active");
 }
 
-// 根据角色隐藏/显示负责人菜单
 function toggleRoleMenu(){
-    let publishMenu = document.getElementById("menuPublish");
-    let statMenu = document.getElementById("menuStat");
+    const publishMenu = document.getElementById("menuPublish");
+    const statMenu = document.getElementById("menuStat");
+    console.log("当前登录角色：",userRole);
     if(userRole === "STUDENT"){
         publishMenu.style.display = "none";
         statMenu.style.display = "none";
     }else{
         publishMenu.style.display = "block";
         statMenu.style.display = "block";
+        publishMenu.style.pointerEvents = "auto";
+        statMenu.style.pointerEvents = "auto";
     }
 }
 
-// 退出登录
 function logout(){
     localStorage.clear();
     token = "";
