@@ -95,6 +95,7 @@ function showMainPage(){
     document.getElementById("mainPage").classList.add("active");
 }
 
+//验证角色 展示对应页面
 function toggleRoleMenu(){
     const publishMenu = document.getElementById("menuPublish");
     const statMenu = document.getElementById("menuStat");

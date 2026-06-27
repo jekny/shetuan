@@ -1,3 +1,4 @@
+// 社团列表
 async function loadClubList(){
     let res = await axios.get(`${BASE_URL}/club/list`);
     let box = document.getElementById("clubBox");
